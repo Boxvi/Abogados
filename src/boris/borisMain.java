@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package abogados;
+package boris;
 
 /**
  *
  * @author Boxvi
  */
-public class Abogados {
+public class borisMain {
 
     /**
      * @param args the command line arguments
