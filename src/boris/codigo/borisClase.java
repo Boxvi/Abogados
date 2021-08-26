@@ -10,5 +10,15 @@ package boris.codigo;
  * @author Boxvi
  */
 public class borisClase {
+    String lola;
+
+    public String getLola() {
+        return lola;
+    }
+
+    public void setLola(String lola) {
+        this.lola = lola;
+    }
+    
     
 }
