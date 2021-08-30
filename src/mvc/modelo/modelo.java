@@ -3,22 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package boris.codigo;
+package mvc.modelo;
 
 /**
  *
  * @author Boxvi
  */
-public class borisClase {
-    String lola;
-
-    public String getLola() {
-        return lola;
-    }
-
-    public void setLola(String lola) {
-        this.lola = lola;
-    }
-    
+public class modelo {
     
 }

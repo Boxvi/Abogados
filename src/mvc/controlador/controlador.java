@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package genesis.codigo;
+package mvc.controlador;
 
 /**
  *
  * @author Boxvi
  */
-public class genesisClase {
+public class controlador {
     
 }
