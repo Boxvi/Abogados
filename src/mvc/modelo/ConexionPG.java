@@ -23,9 +23,9 @@ public class ConexionPG {
     private Statement st;
     private ResultSet rs;
 
-    private String cadenaConexion = "jdbc:postgresql://localhost:5432/persona";
+    private String cadenaConexion = "jdbc:postgresql://34.95.145.15:5432/postgres";
     private String usuarioPG = "postgres";
-    private String contrasenia = "1";
+    private String contrasenia = "M3A_pf2021";
 
     public ConexionPG() {
         try {
