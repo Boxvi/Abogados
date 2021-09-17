@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc.modelo;
+package mvc.modelo.usuario;
 
 /**
  *
  * @author Boxvi
  */
-public class modelo {
+public class usuario {
     
 }
