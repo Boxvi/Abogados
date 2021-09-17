@@ -5,7 +5,6 @@
  */
 package mvc.modelo.persona;
 
-import genesis.Persona;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ import mvc.modelo.ConexionPG;
 
 /**
  *
- * @author Boxvi
+ * @author Genesis
  */
 public class modeloPersona extends persona{
     
@@ -31,20 +30,20 @@ public class modeloPersona extends persona{
     }
     
     public boolean Crear(){
-        String sqla ="INSERT INTO PUBLIC.PERSONA(cedula,nombre,apellido, edad,genero, telefono,direccion,fecha_nac)"
+        String sqla ="INSERT INTO public.persona(cedula,nombre,apellido, edad,genero, telefono,direccion,fecha_nac)"
                 + "VALUES ('"+ getCedula() +"','"+ getNombre() +"','"+ getApellido()+"','"+ getEdad()+"','"+ getGenero()+"','"+ getTelefono()+"','"+ getDireccion()+"','"+ getFecha_nac()+"')";
         return con.accion(sqla);
     }
     
     
-    public List<Persona> Leer() {
-        String sqlc = "SELECT * FROM public.Persona;";
+    public List<persona> Leer() {
+        String sqlc = "SELECT * FROM public.persona;";
         ResultSet rs = con.consulta(sqlc);
-        List<Persona> lp = new ArrayList<>();
+        List<persona> lp = new ArrayList<>();
 
         try {
             while (rs.next()) {
-                Persona miPersona = new Persona();
+                persona miPersona = new persona();
                 miPersona.setCedula(rs.getString("cedula"));
                 miPersona.setNombre(rs.getString("nombre"));
                 miPersona.setApellido(rs.getString("apellido"));
@@ -58,21 +57,21 @@ public class modeloPersona extends persona{
             rs.close();
             return lp;
         } catch (SQLException ex) {
-            Logger.getLogger(genesis.modeloPersona.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(modeloPersona.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
 
     }
     
     public boolean Modificar(String Identificador) {
-        String sqla = "UPDATE public.Persona"
+        String sqla = "UPDATE public.persona"
                 + "SET cedula='" + getCedula() + "', nombre='" + getNombre() + "', apellido='" + getApellido() + "', edad='" + getEdad() + "', genero='" + getGenero() + "', telefono='" + getTelefono() + "',direccion='" + getDireccion() + "',fecha_nac='" + getFecha_nac() + "'"
                 + "WHERE cedula='" + Identificador + "'";
         return con.accion(sqla);
     }
 
     public boolean Borrar(String Identificador) {
-        String sqla = "DELETE FROM public.Persona WHERE cedula='" + Identificador + "'";
+        String sqla = "DELETE FROM public.persona WHERE cedula='" + Identificador + "'";
         return con.accion(sqla);
     }
 }

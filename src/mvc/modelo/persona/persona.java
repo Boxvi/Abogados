@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Boxvi
+ * @author Genesis
  */
 public class persona {
 
