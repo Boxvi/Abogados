@@ -652,6 +652,8 @@ public class Vista_Pagina_Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void pnl_btnClientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_btnClientesMouseEntered
 
     }//GEN-LAST:event_pnl_btnClientesMouseEntered

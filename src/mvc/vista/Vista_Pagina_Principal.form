@@ -632,10 +632,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="pnl_btnAddempleado" alignment="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="pnl_btnAddempleado" alignment="0" max="32767" attributes="0"/>
                                   <Component id="pnl_btnInicio" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="pnl_btnAddpersona" alignment="0" min="-2" pref="291" max="-2" attributes="0"/>
-                                  <Component id="pnl_btnAddusuario" alignment="0" pref="296" max="32767" attributes="0"/>
+                                  <Component id="pnl_btnAddpersona" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pnl_btnAddusuario" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -696,7 +696,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="28" max="32767" attributes="0"/>
                           <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -804,7 +804,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                           <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
