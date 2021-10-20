@@ -123,7 +123,7 @@ public class Vista_Login extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txt_passwordLogin = new javax.swing.JPasswordField();
         jSeparator3 = new javax.swing.JSeparator();
-        btn_login = new javax.swing.JLabel();
+        btn_login = new Modelo.EfectoHover();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -167,7 +167,7 @@ public class Vista_Login extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 150, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Poiret One", 1, 20)); // NOI18N
-        jLabel6.setText("Cedula/Uusario");
+        jLabel6.setText("Usuario");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, -1, -1));
 
         txtUsuarioLogin.setBackground(new java.awt.Color(234, 234, 234));

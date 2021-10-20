@@ -14,7 +14,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import picture.Picture;
+import Picture.Picture;
 
 public class Control_RegistroUsuario {
 
@@ -183,7 +183,7 @@ public class Control_RegistroUsuario {
         lista = m_vUsuario.listarUsuartios();
 
         lista.stream().forEach(p -> {
-            String[] persona = {String.valueOf(p.getCodUsu()), p.getNombreEmpl(), p.getNombreUsu(), p.getContraseña(), p.getTipUsu()};
+            String[] persona = {String.valueOf(p.getCodUsu()),p.getCedula(), p.getNombreEmpl(), p.getNombreUsu(), p.getContraseña(), p.getTipUsu()};
             tblModel.addRow(persona);
         });
     }
@@ -191,7 +191,7 @@ public class Control_RegistroUsuario {
     void cargarDatosTXT(MouseEvent e){
         int seleccion=v_registro_Usuario.getTbl_usuarios().rowAtPoint(e.getPoint());
         int cod_us=Integer.parseInt(String.valueOf(v_registro_Usuario.getTbl_usuarios().getValueAt(seleccion, 0)));
-        v_registro_Usuario.getTxtCedula_RegisEdit().setText(String.valueOf(v_registro_Usuario.getTbl_usuarios().getValueAt(seleccion, 2)));
+        v_registro_Usuario.getTxtCedula_RegisEdit().setText(String.valueOf(v_registro_Usuario.getTbl_usuarios().getValueAt(seleccion, 1)));
         v_registro_Usuario.getTxtUsuario_RegisEdit().setText(String.valueOf(v_registro_Usuario.getTbl_usuarios().getValueAt(seleccion, 3)));
         v_registro_Usuario.getTxtContra_RegisEdit().setText(String.valueOf(v_registro_Usuario.getTbl_usuarios().getValueAt(seleccion,  4)));
         v_registro_Usuario.getCmb_TipoUedit().setSelectedItem(String.valueOf(v_registro_Usuario.getTbl_usuarios().getValueAt(seleccion, 5)));
@@ -208,7 +208,6 @@ public class Control_RegistroUsuario {
                                  NOTA: ESTE METODO SERA INVOCADO ANTES DE INSERTAR O EDITAR UN USUARIO
          */
         if (m_modeloUsuario.usuarioRepetido(v_registro_Usuario.getTxtUsuario_RegisEdit().getText())) {
-            System.out.println("VIVA!!");
             return true;
         } else {
             return false;

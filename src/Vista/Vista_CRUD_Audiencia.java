@@ -7,6 +7,7 @@ package Vista;
 
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
@@ -50,11 +51,11 @@ public class Vista_CRUD_Audiencia extends javax.swing.JInternalFrame {
         txt_filtrarAudiencia = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        txtcodigojuicio = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jchFechaAudiencia = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
+        cbx_informacionAudiencia = new javax.swing.JComboBox<>();
 
         itemVaciacamposAudi.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemVaciacamposAudi.setText("Vaciar Campos");
@@ -64,7 +65,10 @@ public class Vista_CRUD_Audiencia extends javax.swing.JInternalFrame {
         itemImprimirListAudiencia.setText("Imprimir Lista Audiencias");
         jPopupMenu1.add(itemImprimirListAudiencia);
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
 
         panelAudiencia.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -184,24 +188,27 @@ public class Vista_CRUD_Audiencia extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Datos Audiencia");
 
+        cbx_informacionAudiencia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbx_informacionAudiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtcodigojuicio, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(72, 72, 72)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
-                .addComponent(jchFechaAudiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jchFechaAudiencia, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(cbx_informacionAudiencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(66, Short.MAX_VALUE)
@@ -213,13 +220,13 @@ public class Vista_CRUD_Audiencia extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(109, 109, 109)
                 .addComponent(jLabel2)
-                .addGap(13, 13, 13)
-                .addComponent(txtcodigojuicio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbx_informacionAudiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jchFechaAudiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(45, 45, 45)
@@ -301,12 +308,12 @@ public class Vista_CRUD_Audiencia extends javax.swing.JInternalFrame {
         this.jchFechaAudiencia = jchFechaAudiencia;
     }
 
-    public JTextField getTxtcodigojuicio() {
-        return txtcodigojuicio;
+    public JComboBox<String> getCbx_informacionAudiencia() {
+        return cbx_informacionAudiencia;
     }
 
-    public void setTxtcodigojuicio(JTextField txtcodigojuicio) {
-        this.txtcodigojuicio = txtcodigojuicio;
+    public void setCbx_informacionAudiencia(JComboBox<String> cbx_informacionAudiencia) {
+        this.cbx_informacionAudiencia = cbx_informacionAudiencia;
     }
 
     public JTextField getTxt_filtrarAudiencia() {
@@ -339,6 +346,7 @@ public class Vista_CRUD_Audiencia extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_eliminarAudiencia;
     private javax.swing.JButton btn_insertarAudiencia;
     private javax.swing.JButton btn_refescarAdiencia;
+    private javax.swing.JComboBox<String> cbx_informacionAudiencia;
     private javax.swing.JMenuItem itemImprimirListAudiencia;
     private javax.swing.JMenuItem itemVaciacamposAudi;
     private javax.swing.JLabel jLNumAu;
@@ -355,6 +363,5 @@ public class Vista_CRUD_Audiencia extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtbl_Audiencia;
     private javax.swing.JPanel panelAudiencia;
     private javax.swing.JTextField txt_filtrarAudiencia;
-    private javax.swing.JTextField txtcodigojuicio;
     // End of variables declaration//GEN-END:variables
 }

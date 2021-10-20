@@ -12,6 +12,8 @@ import Controlador.cliente.ControladorCliente;
 import Controlador.juicio.ControladorJuicio;
 import Controlador.cita.ControladorCita;
 import Controlador.audiencia.ControlAudiencia;
+import Controlador.roles.ControladorRol;
+import Controlador.reportes.ControladorReportes;
 import Vista.*;
 import Modelo.persona.*;
 import Modelo.usuario.*;
@@ -20,6 +22,8 @@ import Modelo.cliente.*;
 import Modelo.juicio.*;
 import Modelo.cita.*;
 import Modelo.audiencia.*;
+import Modelo.rol.*;
+import Modelo.ImagenFondo;
 import java.awt.Color;
 import static java.awt.Frame.ICONIFIED;
 import java.awt.event.MouseEvent;
@@ -40,6 +44,7 @@ public class Control_MenuGeneral {
 
     private Vista_Pagina_Principal v_MuenuGeneral;
     private MouseListener mouse;
+    private ImagenFondo fondo;
 
     public Control_MenuGeneral() {
 
@@ -47,6 +52,10 @@ public class Control_MenuGeneral {
 
     public Control_MenuGeneral(Vista_Pagina_Principal v_MuenuGeneral) {
         this.v_MuenuGeneral = v_MuenuGeneral;
+        v_MuenuGeneral.getDesktopPrincipal().setBorder(new ImagenFondo("/Vista/Imagenes2/Imagen_Fondo.jpg"));
+        //validarUsuario();
+        v_MuenuGeneral.setLocationRelativeTo(null);
+        
         v_MuenuGeneral.setVisible(true);
 
     }
@@ -72,13 +81,25 @@ public class Control_MenuGeneral {
                 if (e.getSource() == v_MuenuGeneral.getBtn_Juicios()) {
                     abririCRUD_Juicio();
                 }
-                
-                if(e.getSource() == v_MuenuGeneral.getBtn_Citas()){
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Citas()) {
                     abrirCRUD_Cita();
                 }
-                
+
                 if (e.getSource() == v_MuenuGeneral.getBtn_Audiencias()) {
                     abrirCRUD_Audiencia();
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Roles()) {
+                    abrirCRUD_Roles();
+                }
+                if (e.getSource() == v_MuenuGeneral.getBtn_Inicio()) {
+                    v_MuenuGeneral.getDesktopPrincipal().removeAll();
+                    v_MuenuGeneral.getDesktopPrincipal().updateUI();
+                }
+                
+                if (e.getSource() == v_MuenuGeneral.getBtn_Reportes()) {
+                    abrirReportes();
                 }
             }
 
@@ -103,10 +124,31 @@ public class Control_MenuGeneral {
                 }
 
                 if (e.getSource() == v_MuenuGeneral.getBtn_Cliente()) {
-                    System.out.println("A");
                     v_MuenuGeneral.getBtn_Cliente().setBackground(new Color(229, 243, 255));
                 }
 
+                if (e.getSource() == v_MuenuGeneral.getBtn_Juicios()) {
+                    v_MuenuGeneral.getBtn_Juicios().setBackground(new Color(229, 243, 255));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Audiencias()) {
+                    v_MuenuGeneral.getBtn_Audiencias().setBackground(new Color(229, 243, 255));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Citas()) {
+                    v_MuenuGeneral.getBtn_Citas().setBackground(new Color(229, 243, 255));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Reportes()) {
+                    v_MuenuGeneral.getBtn_Reportes().setBackground(new Color(229, 243, 255));
+                }
+                if (e.getSource() == v_MuenuGeneral.getBtn_Roles()) {
+                    v_MuenuGeneral.getPnl_btnAddRoles().setBackground(new Color(11, 11, 11));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Inicio()) {
+                    v_MuenuGeneral.getPnl_btnInicio().setBackground(new Color(11, 11, 11));
+                }
             }
 
             @Override
@@ -123,8 +165,29 @@ public class Control_MenuGeneral {
                 }
 
                 if (e.getSource() == v_MuenuGeneral.getBtn_Cliente()) {
-                    System.out.println("B");
                     v_MuenuGeneral.getBtn_Cliente().setBackground(new Color(40, 40, 40));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Juicios()) {
+                    v_MuenuGeneral.getBtn_Juicios().setBackground(new Color(40, 40, 40));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Audiencias()) {
+                    v_MuenuGeneral.getBtn_Audiencias().setBackground(new Color(40, 40, 40));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Citas()) {
+                    v_MuenuGeneral.getBtn_Citas().setBackground(new Color(40, 40, 40));
+                }
+
+                if (e.getSource() == v_MuenuGeneral.getBtn_Reportes()) {
+                    v_MuenuGeneral.getBtn_Reportes().setBackground(new Color(40, 40, 40));
+                }
+                if (e.getSource() == v_MuenuGeneral.getBtn_Roles()) {
+                    v_MuenuGeneral.getPnl_btnAddRoles().setBackground(new Color(40, 40, 40));
+                }
+                if (e.getSource() == v_MuenuGeneral.getBtn_Inicio()) {
+                    v_MuenuGeneral.getPnl_btnInicio().setBackground(new Color(40, 40, 40));
                 }
             }
 
@@ -139,7 +202,9 @@ public class Control_MenuGeneral {
         v_MuenuGeneral.getBtn_Juicios().addMouseListener(mouse);
         v_MuenuGeneral.getBtn_Citas().addMouseListener(mouse);
         v_MuenuGeneral.getBtn_Audiencias().addMouseListener(mouse);
-
+        v_MuenuGeneral.getBtn_Roles().addMouseListener(mouse);
+        v_MuenuGeneral.getBtn_Inicio().addMouseListener(mouse);
+        v_MuenuGeneral.getBtn_Reportes().addMouseListener(mouse);
     }
 
     void abrirRegistroUsuario() {
@@ -187,22 +252,49 @@ public class Control_MenuGeneral {
         ControladorJuicio c_controlJuicio = new ControladorJuicio(m_modeloJuicio, v_CRUD_Juicio);
         c_controlJuicio.iniciaControl();
     }
-    
-    void abrirCRUD_Cita(){
-        Vista_CRUD_Cita v_CRUD_Cita= new Vista_CRUD_Cita();
-        ModeloCita m_modeloCita= new ModeloCita();
-        
+
+    void abrirCRUD_Cita() {
+        Vista_CRUD_Cita v_CRUD_Cita = new Vista_CRUD_Cita();
+        ModeloCita m_modeloCita = new ModeloCita();
+
         v_MuenuGeneral.getDesktopPrincipal().add(v_CRUD_Cita);
-        ControladorCita c_controlCita= new ControladorCita(v_CRUD_Cita, m_modeloCita);
+        ControladorCita c_controlCita = new ControladorCita(v_CRUD_Cita, m_modeloCita);
         c_controlCita.iniciaControl();
     }
-    
-    void abrirCRUD_Audiencia(){
-        Vista_CRUD_Audiencia v_CRUD_Audiencia= new Vista_CRUD_Audiencia();
-        ModeloAudiencia m_modeloAudiencia= new ModeloAudiencia();
-        
+
+    void abrirCRUD_Audiencia() {
+        Vista_CRUD_Audiencia v_CRUD_Audiencia = new Vista_CRUD_Audiencia();
+        ModeloAudiencia m_modeloAudiencia = new ModeloAudiencia();
+
         v_MuenuGeneral.getDesktopPrincipal().add(v_CRUD_Audiencia);
-        ControlAudiencia c_controlAudiencia= new ControlAudiencia(m_modeloAudiencia, v_CRUD_Audiencia);
+        ControlAudiencia c_controlAudiencia = new ControlAudiencia(m_modeloAudiencia, v_CRUD_Audiencia);
         c_controlAudiencia.inicioControl();
+    }
+
+    void abrirCRUD_Roles() {
+        Vista_CRUD_Roles v_CRUD_Roles = new Vista_CRUD_Roles();
+        ModeloRol m_modeloRoles = new ModeloRol();
+
+        v_MuenuGeneral.getDesktopPrincipal().add(v_CRUD_Roles);
+        ControladorRol c_controlRoles = new ControladorRol(m_modeloRoles, v_CRUD_Roles);
+        c_controlRoles.inicioControl();
+    }
+    
+    void abrirReportes(){
+        Vista_Reportes v_vistaReportes= new Vista_Reportes();
+        v_MuenuGeneral.getDesktopPrincipal().add(v_vistaReportes);
+        
+        ControladorReportes c_controlReportes= new ControladorReportes(v_vistaReportes);
+        c_controlReportes.inicioControlReporte();      
+    }
+
+    void validarUsuario() {
+        if (v_MuenuGeneral.getLbl_NombreUsuario().getText().equals("Administrador") == false) {
+            System.out.println("ESTRO");
+            v_MuenuGeneral.getPnl_btnAddempleado().setVisible(false);
+            v_MuenuGeneral.getPnl_btnAddpersona().setVisible(false);
+            v_MuenuGeneral.getPnl_btnAddusuario().setVisible(false);
+            v_MuenuGeneral.getPnl_btnAddRoles().setVisible(false);
+        }
     }
 }

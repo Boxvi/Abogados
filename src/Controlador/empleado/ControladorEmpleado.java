@@ -20,15 +20,17 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import Modelo.empleado.Empleado;
 import Modelo.empleado.ModeloEmpleado;
+import static Modelo.interfaces.Validaciones.validaPersonasRegistrada;
 import Modelo.persona.Persona;
 import Modelo.rol.Rol;
 import Vista.Vista_CRUD_Empleado;
+import Modelo.interfaces.Validaciones;
 
 /**
  *
  * @author Boxvi
  */
-public class ControladorEmpleado {
+public class ControladorEmpleado implements Validaciones {
 
     private ModeloEmpleado modelo;
     private Vista_CRUD_Empleado vista_Empleado;
@@ -83,8 +85,13 @@ public class ControladorEmpleado {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                llenarCuadrosDialogoPersona(vista_Empleado.getTxt_cedulaEmpleado().getText());
+
                 cargarTablaEmpleado(vista_Empleado.getTxt_filtroEmpleado().getText());
+
+                if (e.getSource() == vista_Empleado.getTxt_cedulaEmpleado()) {
+                    System.out.println("A");
+                    creacionEmpleado(2);
+                }
             }
         };
 
@@ -95,9 +102,10 @@ public class ControladorEmpleado {
 
         //BOTONES PRINCIPALES 
         vista_Empleado.getBtn_refescarEmpleado().addActionListener(l -> cargarTablaEmpleado());
-        vista_Empleado.getBtn_insertarEmpleado().addActionListener(l -> crearEmpleado());
+        vista_Empleado.getBtn_insertarEmpleado().addActionListener(l -> creacionEmpleado(1));
         vista_Empleado.getBtn_editarEmpleado().addActionListener(l -> modificarEmpleado());
-        vista_Empleado.getBtn_eliminarEmpleado().addActionListener(l -> eliminarEmpleado());
+        vista_Empleado.getBtn_eliminarEmpleado().addActionListener(l -> validarEliminarEmpleado());
+        vista_Empleado.getJmenuItemLimpiarCamposEmpl().addActionListener(l -> limpiarCamposEmpleado());
     }
 
     /*
@@ -106,7 +114,7 @@ public class ControladorEmpleado {
     //CREATE - CREAR
     private void crearEmpleado() {
         if (!vista_Empleado.getTxt_cedulaEmpleado().getText().isEmpty() && !vista_Empleado.getTxt_sueldoEmpleado().getText().isEmpty()
-                && !vista_Empleado.getjCmb_estadoEmpleado().getSelectedItem().toString().isEmpty() && !vista_Empleado.getjCmb_rolEmpleado().getSelectedItem().toString().isEmpty()) {
+                && !vista_Empleado.getjCmb_estadoEmpleado().getSelectedItem().toString().equals("Seleccionar") && !vista_Empleado.getjCmb_rolEmpleado().getSelectedItem().toString().equals("Seleccionar")) {
 
             ModeloEmpleado modeloEmpleado = new ModeloEmpleado();
             modeloEmpleado.setCod_empleado(modeloEmpleado.contarCodigoEmpleados());
@@ -116,14 +124,15 @@ public class ControladorEmpleado {
             modeloEmpleado.setCod_rol(modelo.dameCodigoRol(vista_Empleado.getjCmb_rolEmpleado().getSelectedItem().toString()));
 
             if (modeloEmpleado.crearEmpleado()) {
-                JOptionPane.showMessageDialog(vista_Empleado, "EL DATO SE GUARDO CORRECTAMENTE DENTRO DE LA BASE DE DATOS");
+                JOptionPane.showMessageDialog(vista_Empleado, "Los Datos se Guardaron satisfactoriamente");
                 limpiarCamposEmpleado();
                 cargarTablaEmpleado();
             } else {
-                JOptionPane.showMessageDialog(vista_Empleado, "OCURRIO UN PROBLEMA NO SE PUEDE GUARDAR");
+                JOptionPane.showMessageDialog(vista_Empleado, "Hubo un error al tratar de registrar al Empleado", "Error en Registro del Empleado", 0);
             }
+
         } else {
-            JOptionPane.showMessageDialog(vista_Empleado, "TODOS LOS CAMPOS DEBEN DE ESTAR LLENOS PARA REGISTAR AL EMPLEADO");
+            JOptionPane.showMessageDialog(vista_Empleado, "Todos los campos deben ser llenados", "Campos Vacios", 2);
         }
     }
 
@@ -145,7 +154,7 @@ public class ControladorEmpleado {
     //UPDATE - MODIFICAR
     private void modificarEmpleado() {
         if (!vista_Empleado.getTxt_cedulaEmpleado().getText().isEmpty() && !vista_Empleado.getTxt_sueldoEmpleado().getText().isEmpty()
-                && !vista_Empleado.getjCmb_estadoEmpleado().getSelectedItem().toString().isEmpty() && !vista_Empleado.getjCmb_rolEmpleado().getSelectedItem().toString().isEmpty()) {
+                && !vista_Empleado.getjCmb_estadoEmpleado().getSelectedItem().toString().equals("Seleccionar") && !vista_Empleado.getjCmb_rolEmpleado().getSelectedItem().toString().equals("Seleccionar")) {
 
             ModeloEmpleado modeloEmpleado = new ModeloEmpleado();
             //modeloEmpleado.setCod_empleado(modeloEmpleado.ContarCodigoEmpleados());
@@ -155,14 +164,14 @@ public class ControladorEmpleado {
             modeloEmpleado.setCod_rol(modelo.dameCodigoRol(vista_Empleado.getjCmb_rolEmpleado().getSelectedItem().toString()));
 
             if (modeloEmpleado.modificarEmpleado(modeloEmpleado.ObtenerCodCliente(vista_Empleado.getTxt_cedulaEmpleado().getText()))) {
-                JOptionPane.showMessageDialog(vista_Empleado, "EL DATO SE modifico CORRECTAMENTE DENTRO DE LA BASE DE DATOS");
+                JOptionPane.showMessageDialog(vista_Empleado, "Los Datos se Guardaron satisfactoriamente");
                 limpiarCamposEmpleado();
                 cargarTablaEmpleado();
             } else {
-                JOptionPane.showMessageDialog(vista_Empleado, "OCURRIO UN PROBLEMA NO SE PUEDE GUARDAR");
+                JOptionPane.showMessageDialog(vista_Empleado, "Hubo un error al tratar de modificar al Empleado", "Error en Modificar al Empleado", 0);
             }
         } else {
-            JOptionPane.showMessageDialog(vista_Empleado, "TODOS LOS CAMPOS DEBEN DE ESTAR LLENOS PARA REGISTAR AL EMPLEADO");
+            JOptionPane.showMessageDialog(vista_Empleado, "Todos los campos deben ser llenados", "Campos Vacios", 2);
         }
     }
 
@@ -173,11 +182,11 @@ public class ControladorEmpleado {
 
         if (resultado == JOptionPane.YES_NO_OPTION) {
             if (modeloEmpleado.eliminarEmpleado(modeloEmpleado.ObtenerCodCliente(vista_Empleado.getTxt_cedulaEmpleado().getText()))) {
-                JOptionPane.showMessageDialog(vista_Empleado, "EL DATO SE ELIMINO CON SATISFACCION");
+                JOptionPane.showMessageDialog(vista_Empleado, "El Dato se Elimino satisfactoriamente");
                 limpiarCamposEmpleado();
                 cargarTablaEmpleado();
             } else {
-                JOptionPane.showMessageDialog(vista_Empleado, "ALGUN DATO SE ENCUENTRA MAL REVISE NUEVAMENTE ");
+                JOptionPane.showMessageDialog(vista_Empleado, "Hubo un error al tratar de Eliminar al Empleado", "Error al eliminar al Empleado", 0);
             }
         }
     }
@@ -194,7 +203,7 @@ public class ControladorEmpleado {
             tblModelo.addRow(empleado);
         });
     }
-    
+
     //FILTRAR INFORMACION EN LOS CUADROS DE DIALOGO
     private void llenarCuadrosDialogoPersona(String cadenaBusqueda) {
         List<Persona> listaPersona = modelo.filtrarInformacionParatxtCliente(cadenaBusqueda);
@@ -222,9 +231,7 @@ public class ControladorEmpleado {
 
         });
     }
-    
-    
-    
+
     //Llenar roles disponibles
     private void llenarRolesDisponibles() {
         List<Rol> listaRoles = new ModeloEmpleado().obtenerRolesComboBX();
@@ -284,4 +291,51 @@ public class ControladorEmpleado {
         }
         return false;
     }
+
+    private boolean validarCedulasRepetidasEmpleado(String cedula) {
+        List<Empleado> listaPersona = modelo.validarCedulasRepetidas();
+        for (int i = 0; i < listaPersona.size(); i++) {
+            if (listaPersona.get(i).getCedula().equalsIgnoreCase(cedula)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void creacionEmpleado(int aguja) {
+
+        if (aguja == 1) {
+            if (validarCedulasRepetidasEmpleado(vista_Empleado.getTxt_cedulaEmpleado().getText()) == true) {
+                crearEmpleado();
+            } else {
+                JOptionPane.showMessageDialog(vista_Empleado, "Esta cedula ya esta registrada", "Error en Cedula", 0);
+            }
+        }
+
+        if (aguja == 2) {
+            if (vista_Empleado.getTxt_cedulaEmpleado().getText().length() == 10) {
+                System.out.println("B");
+                if (validaPersonasRegistrada(vista_Empleado.getTxt_cedulaEmpleado().getText()) == true) {
+                    llenarCuadrosDialogoPersona(vista_Empleado.getTxt_cedulaEmpleado().getText());
+                    vista_Empleado.getBtn_insertarEmpleado().setEnabled(true);
+                    System.out.println("C");
+                } else {
+                    System.out.println("D");
+                    JOptionPane.showMessageDialog(vista_Empleado, "UPS! Parece que esta cedula no se encuentra registrada en Persona." + "\nPor favor resgistre primero una Persona.", "Cedula no Existe", 2);
+                    vista_Empleado.getBtn_insertarEmpleado().setEnabled(false);
+                    limpiarCamposEmpleado();
+                }
+            }
+        }
+    }
+    
+    private void validarEliminarEmpleado(){
+        if (validaPersonasRegistrada(vista_Empleado.getTxt_cedulaEmpleado().getText())==true) {
+            eliminarEmpleado();
+        }else{
+            JOptionPane.showMessageDialog(vista_Empleado, "Debe primero seleccionar un dato para eliminar", "Error!", 0);
+        }
+    }
+    
+    
 }

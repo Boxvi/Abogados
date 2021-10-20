@@ -5,6 +5,7 @@ import Controlador.menuPrincipal.Control_MenuGeneral;
 import Modelo.usuario.Usuario;
 import Vista.*;
 import Modelo.*;
+import Picture.Picture;
 import java.awt.Color;
 import static java.awt.Frame.ICONIFIED;
 import java.awt.event.MouseEvent;
@@ -17,7 +18,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.*;
-import picture.Picture;
+
 /**
  *
  * @author velez
@@ -29,15 +30,15 @@ public class Control_Login {
     private MouseListener mouse;
     private String[] datosUsuario;
     private Picture picture = new Picture();
-    
+
     public Control_Login(Vista_Login vista_login, Modelo_Usuario modelo_usuario) {
         this.vista_login = vista_login;
         this.modelo_usuario = modelo_usuario;
-
+        vista_login.setIconImage(new ImageIcon(getClass().getResource("")).getImage());
         vista_login.setBackground(new Color(0, 0, 0, 0));
         vista_login.setLocationRelativeTo(null);
         vista_login.setVisible(true);
-        vista_login.getBtn_verContaseña().setIcon(new ImageIcon(Vista_Login.class.getResource("/Vista/Imagenes/Icon_ocultarContraseña.png")));
+        //vista_login.getBtn_verContaseña().setIcon(new ImageIcon(Vista_Login.class.getResource("/Vista/Imagenes/Icon_ocultarContraseña.png")));
     }
 
     public void inicioControlLogin() {
@@ -57,7 +58,7 @@ public class Control_Login {
                         Logeo();
                     } catch (SQLException ex) {
                         Logger.getLogger(Control_Login.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NullPointerException ex){
+                    } catch (NullPointerException ex) {
                         System.out.println("No hay Datos");
                     }
                 }
@@ -117,28 +118,46 @@ public class Control_Login {
 
     void Logeo() throws SQLException {
         try {
+            System.out.println("A");
             datosUsuario = modelo_usuario.verificarLogin(vista_login.getTxtUsuarioLogin().getText(), vista_login.getTxt_passwordLogin().getText());
-            if (datosUsuario[0]==null || datosUsuario[1]==null) {
+
+            if (datosUsuario[0] == null || datosUsuario[1] == null) {
+                System.out.println("C");
                 JOptionPane.showMessageDialog(null, "El usuario o la contraseña son incorrectos o no se encuentran registrados", "ERROR AL INICIAR SESIÓN", ERROR_MESSAGE);
-            }else{
+            } else {
+                System.out.println("D");
                 abrirMenuPrincipa();
             }
         } catch (NullPointerException ex) {
-            
+            System.out.println(ex);
         }
 
     }
-    void abrirMenuPrincipa(){
-        
+
+    void abrirMenuPrincipa() {
+
         //Sacamos la foto y el nombre de usario 
-        System.out.println("COD: "+datosUsuario[1]);
-        ArrayList<Usuario> usuario=modelo_usuario.listarUsuartios(datosUsuario[1]);
+        System.out.println("COD: " + datosUsuario[1]);
+        System.out.println("TIP: " + datosUsuario[0]);
+        ArrayList<Usuario> usuario = modelo_usuario.listarUsuartios(datosUsuario[1]);
         Icon fotoLbl;
-        Vista_Pagina_Principal v_menuP= new Vista_Pagina_Principal();
-        Control_MenuGeneral c_menuP= new Control_MenuGeneral(v_menuP);
+        Vista_Pagina_Principal v_menuP = new Vista_Pagina_Principal();
+        Control_MenuGeneral c_menuP = new Control_MenuGeneral(v_menuP);
+
+        if (datosUsuario[0].equals("Estandar")) {
+            System.out.println("Entro");
+            v_menuP.getPnl_btnAddempleado().setVisible(false);
+            v_menuP.getPnl_btnAddpersona().setVisible(false);
+            v_menuP.getPnl_btnAddusuario().setVisible(false);
+            v_menuP.getPnl_btnAddRoles().setVisible(false);
+            v_menuP.getTipoTitleUs().setText(datosUsuario[0]);
+        } else {
+            v_menuP.getTipoTitleUs().setText(datosUsuario[0]);
+        }
+
         c_menuP.inicioControlMenuG();
         v_menuP.getLbl_NombreUsuario().setText(usuario.get(0).getUsuario());
-        picture.ParseToIco(usuario.get(0).getFoto(),v_menuP.getLbl_FotoUsuario());
+        picture.ParseToIco(usuario.get(0).getFoto(), v_menuP.getLbl_FotoUsuario());
         vista_login.dispose();
     }
 }

@@ -5,6 +5,9 @@
  */
 package Controlador.juicio;
 
+import Modelo.interfaces.Validaciones;
+import static Modelo.interfaces.Validaciones.clientesExistentes;
+import static Modelo.interfaces.Validaciones.validaPersonasRegistrada;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -20,7 +23,7 @@ import Vista.Vista_CRUD_Juicio;
  *
  * @author Boxvi
  */
-public class ControladorJuicio {
+public class ControladorJuicio implements Validaciones{
 
     private ModeloJuicio modelo;
     private Vista_CRUD_Juicio vista;
@@ -93,9 +96,9 @@ public class ControladorJuicio {
 
         //botones
         vista.getBtn_refescarJuicio().addActionListener(l -> cargarTablaJuicio());
-        vista.getBtn_insertarJuicio().addActionListener(l -> crearJuicio());
+        vista.getBtn_insertarJuicio().addActionListener(l -> creacionJuicio());
         vista.getBtn_editarJuicio().addActionListener(l -> modificarJuicio());
-        vista.getBtn_eliminarJuicio().addActionListener(l -> eliminarJuicio());
+        vista.getBtn_eliminarJuicio().addActionListener(l -> validarEliminarJuicio());
 
     }
 
@@ -105,8 +108,10 @@ public class ControladorJuicio {
     //CREATE - CREAR
     private void crearJuicio() {
 
-        if (!vista.getTxt_cedulaClienteJuicio().getText().isEmpty() && !vista.getCbxTipoJuicio().getSelectedItem().toString().isEmpty()
-                && !vista.getCbxEstadoJuicio().getSelectedItem().toString().isEmpty() && !vista.getCbxabogadosDisponibles().getSelectedItem().toString().isEmpty()) {
+        if (!vista.getTxt_cedulaClienteJuicio().getText().isEmpty() && !vista.getCbxTipoJuicio().getSelectedItem().toString().equalsIgnoreCase("Seleccionar")
+                && !vista.getCbxEstadoJuicio().getSelectedItem().toString().equalsIgnoreCase("Seleccionar") && !vista.getCbxabogadosDisponibles().getSelectedItem().toString().equalsIgnoreCase("Seleccionar")) {
+
+            
             ModeloJuicio modeloJuicios = new ModeloJuicio();
             modeloJuicios.setCedula(vista.getTxt_cedulaClienteJuicio().getText());
             modeloJuicios.setTip_juicio(vista.getCbxTipoJuicio().getSelectedItem().toString());
@@ -121,11 +126,11 @@ public class ControladorJuicio {
                     limpiarCampos();
                     cargarTablaJuicio();
                 } else {
-                    JOptionPane.showMessageDialog(vista, "ALGUN DATO SE ENCUENTRA MAL REVISE NUEVAMENTE ");
+                    JOptionPane.showMessageDialog(vista, "ALGUN DATO SE ENCUENTRA MAL REVISE NUEVAMENTE ","Error!",0);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(vista, "ASEGURESE DE RELLENAR TODOS LOS CAMPOS");
+            JOptionPane.showMessageDialog(vista, "ASEGURESE DE RELLENAR TODOS LOS CAMPOS","Campos Vacios",0);
         }
 
     }
@@ -146,8 +151,8 @@ public class ControladorJuicio {
     //UPDATE - MODIFICAR
     private void modificarJuicio() {
 
-        if (!vista.getTxt_cedulaClienteJuicio().getText().isEmpty() && !vista.getCbxTipoJuicio().getSelectedItem().toString().isEmpty()
-                && !vista.getCbxEstadoJuicio().getSelectedItem().toString().isEmpty() && !vista.getCbxabogadosDisponibles().getSelectedItem().toString().isEmpty()) {
+        if (!vista.getTxt_cedulaClienteJuicio().getText().isEmpty() && !vista.getCbxTipoJuicio().getSelectedItem().toString().equalsIgnoreCase("Seleccionar")
+                && !vista.getCbxEstadoJuicio().getSelectedItem().toString().equalsIgnoreCase("Seleccionar") && !vista.getCbxabogadosDisponibles().getSelectedItem().toString().equalsIgnoreCase("Seleccionar")) {
 
             ModeloJuicio modeloJuicios = new ModeloJuicio();
             modeloJuicios.setCedula(vista.getTxt_cedulaClienteJuicio().getText());
@@ -163,11 +168,11 @@ public class ControladorJuicio {
                     limpiarCampos();
                     cargarTablaJuicio();
                 } else {
-                    JOptionPane.showMessageDialog(vista, "ALGUN DATO SE ENCUENTRA MAL REVISE NUEVAMENTE ");
+                    JOptionPane.showMessageDialog(vista, "ALGUN DATO SE ENCUENTRA MAL REVISE NUEVAMENTE ","Error!",0);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(vista, "ASEGURESE DE RELLENAR TODOS LOS CAMPOS");
+            JOptionPane.showMessageDialog(vista, "ASEGURESE DE RELLENAR TODOS LOS CAMPOS","Campos Vacios",0);
         }
 
     }
@@ -183,7 +188,7 @@ public class ControladorJuicio {
                 limpiarCampos();
                 cargarTablaJuicio();
             } else {
-                JOptionPane.showMessageDialog(vista, "ALGUN DATO SE ENCUENTRA MAL REVISE NUEVAMENTE ");
+                JOptionPane.showMessageDialog(vista, "ALGUN DATO SE ENCUENTRA MAL REVISE NUEVAMENTE ","Datos Erroneas!",0);
             }
         }
     }
@@ -249,6 +254,23 @@ public class ControladorJuicio {
         vista.getCbxabogadosDisponibles().setSelectedItem(String.valueOf(vista.getjTbl_Juicios().getValueAt(seleccionar, 4)));
         vista.getCbxTipoJuicio().setSelectedItem(String.valueOf(vista.getjTbl_Juicios().getValueAt(seleccionar, 5)));
         vista.getCbxEstadoJuicio().setSelectedItem(String.valueOf(vista.getjTbl_Juicios().getValueAt(seleccionar, 6)));
+    }
+    
+    public void creacionJuicio() {
+
+        if (clientesExistentes() == true) {
+            crearJuicio();
+        } else {
+            JOptionPane.showMessageDialog(vista, "LA CEDULA QUE INTENTA REGISTRATR NO EXISTE, PREVIAMNETE DEBE DE CREAR UNA PERSONA LUEGO UN CLIENTE", "Error/Verificacion", 0);
+        }
+    }
+    
+    private void validarEliminarJuicio() {
+        if (validaPersonasRegistrada(vista.getTxt_cedulaClienteJuicio().getText()) == true) {
+            eliminarJuicio();
+        } else {
+            JOptionPane.showMessageDialog(vista, "Debe primero seleccionar un dato para eliminar", "Error!", 0);
+        }
     }
 
 }

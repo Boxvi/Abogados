@@ -16,6 +16,7 @@ public class Empleado extends Persona {
 
     private String tipo_rol;
     private String estados;
+    private String genero;
 
     public Empleado() {
     }
@@ -26,7 +27,7 @@ public class Empleado extends Persona {
         this.estado = estado;
         this.cod_rol = cod_rol;
     }
-
+    
     public Integer getCod_empleado() {
         return cod_empleado;
     }
@@ -75,4 +76,13 @@ public class Empleado extends Persona {
         this.cod_rol = cod_rol;
     }
 
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+    
+    
 }

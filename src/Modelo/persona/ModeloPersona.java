@@ -70,7 +70,6 @@ public class ModeloPersona extends Persona {
         String sqla = "UPDATE public.persona "
                 + "SET nombre='" + getNombre() + "', apellido='" + getApellido() + "', edad= '" + getEdad() + "', genero='" + getGenero() + "', telefono='" + getTelefono() + "', correo='" + getCorreo() + "', direccion='" + getDireccion() + "', fecha_nac= to_date('" + getFecha_nac() + "','yyyy-MM-dd') "
                 + "WHERE cedula='" + identificadorCedula + "'";
-
         return con.insertUpdateDelete(sqla);
     }
 

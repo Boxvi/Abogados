@@ -71,6 +71,7 @@ WHERE p.cedula = e.cedula and e.cod_rol = r.cod_rol and e.eliminado = true)
                 miEmpleado.setEdad(rs.getInt("edad"));
                 miEmpleado.setTelefono(rs.getString("telefono"));
                 miEmpleado.setSueldo(rs.getString("sueldo"));
+                miEmpleado.setGenero(rs.getString("genero"));
                 miEmpleado.setEstados(rs.getString("estados"));
                 miEmpleado.setTipo_rol(rs.getString("tipo_rol"));
                 le.add(miEmpleado);
@@ -109,7 +110,7 @@ WHERE p.cedula = e.cedula and e.cod_rol = r.cod_rol and e.eliminado = true)
                     + "or lower(nombre) like lower('%" + cadenaBusqueda + "%') or lower(apellido) like lower('%" + cadenaBusqueda + "%') "
                     + "or telefono like lower('%" + cadenaBusqueda + "%') or lower(estados) like lower ('%" + cadenaBusqueda + "%') "
                     + "or lower(correo) like lower('%" + cadenaBusqueda + "%') or lower(direccion) like lower('%" + cadenaBusqueda + "%') "
-                    + "or lower(tipo_rol) like lower('%" + cadenaBusqueda + "%')";
+                    + "or lower(tipo_rol) like lower('%" + cadenaBusqueda + "%')or lower(genero) like lower('%"+ cadenaBusqueda + "%')";
             ResultSet rs = con.selectConsulta(sqlc);
             List<Empleado> le = new ArrayList<>();
 
@@ -125,6 +126,7 @@ WHERE p.cedula = e.cedula and e.cod_rol = r.cod_rol and e.eliminado = true)
                 miEmpleado.setEdad(rs.getInt("edad"));
                 miEmpleado.setTelefono(rs.getString("telefono"));
                 miEmpleado.setSueldo(rs.getString("sueldo"));
+                miEmpleado.setGenero(rs.getString("genero"));
                 miEmpleado.setEstados(rs.getString("estados"));
                 miEmpleado.setTipo_rol(rs.getString("tipo_rol"));
                 le.add(miEmpleado);
@@ -182,27 +184,6 @@ WHERE p.cedula = e.cedula and e.cod_rol = r.cod_rol and e.eliminado = true)
         return 0;
     }
 
-    /* public String dameTipoRol(int cod_rol) {
-        try {
-            String sqlc = "Select tipo_rol from roles where cod_rol ='" + cod_rol + "'";
-            ResultSet rs = con.consulta(sqlc);
-            while (rs.next()) {
-                return rs.getString("tipo_rol");
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ModeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
- /*public String dameEstadoEmpleado(boolean estado) {
-        if (estado) {
-            return "ACTIVO";
-        } else {
-            return "INACTIVO";
-        }
-    }*/
     public int contarCodigoEmpleados() {
         try {
             String sqla = "select count(cod_empleado) as contador from empleado";
@@ -247,5 +228,26 @@ WHERE p.cedula = e.cedula and e.cod_rol = r.cod_rol and e.eliminado = true)
         }
         return null;
     }
+    
+    //VALIDACIONES
+    public List<Empleado> validarCedulasRepetidas() {
+        try {
+            String sqlc = "SELECT cedula FROM empleado";
 
+            System.out.println(sqlc);
+            ResultSet rs = con.selectConsulta(sqlc);
+            List<Empleado> lc = new ArrayList<>();
+
+            while (rs.next()) {
+                Empleado miEmpleado = new Empleado();
+                miEmpleado.setCedula(rs.getString("cedula"));
+                lc.add(miEmpleado);
+            }
+            rs.close();
+            return lc;
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }

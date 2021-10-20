@@ -17,14 +17,6 @@ import Modelo.persona.Persona;
  */
 public class ModeloCliente extends Cliente {
 
-    //Creaccion de una vista para el correcto funcionamiento
-    /*
-Create or replace view tabla_cliente 
-(cedula, nombre, apellido, correo, direccion, fecha_nac, edad, telefono, genero, e_civil) as 
-(SELECT p.cedula, nombre, apellido, correo, direccion, fecha_nac, edad, telefono,genero, e_civil 
-FROM persona p, cliente c 
-WHERE p.cedula = c.cedula and c.eliminado = true);
-     */
     ConexionPG con = new ConexionPG();
 
     public ModeloCliente() {
@@ -216,19 +208,25 @@ WHERE p.cedula = c.cedula and c.eliminado = true);
         return 0;
 
     }
-
-    //metodo para indicar si existe un registro de la cedula en la base de datos
-    public boolean exiteRegistro(String cadenaCedula) {
+    //VALIDACIONES
+    public List<Cliente> validarCedulasRepetidas() {
         try {
-            String sqlc = "select cedula from persona where eliminado = true and cedula ='" + cadenaCedula + "';";
+            String sqlc = "SELECT cedula FROM public.cliente";
+
+            System.out.println(sqlc);
             ResultSet rs = con.selectConsulta(sqlc);
+            List<Cliente> lc = new ArrayList<>();
+
             while (rs.next()) {
-                return true;
+                Cliente miCliente = new Cliente();
+                miCliente.setCedula(rs.getString("cedula"));
+                lc.add(miCliente);
             }
+            rs.close();
+            return lc;
         } catch (SQLException ex) {
             Logger.getLogger(ModeloCliente.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return false;
     }
-
 }

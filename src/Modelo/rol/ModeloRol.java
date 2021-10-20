@@ -29,7 +29,7 @@ public class ModeloRol extends Rol {
     }
 
     public boolean Crear() {
-        String sqla = "INSERT INTO public.roles(cod_rol, tipo_rol)VALUES ('" + getCod_rol() + "', '" + getTipo_rol() + "');";
+        String sqla = "INSERT INTO public.roles(tipo_rol)VALUES ('" + getTipo_rol() + "');";
         return con.insertUpdateDelete(sqla);
     }
 
@@ -52,14 +52,14 @@ public class ModeloRol extends Rol {
         }
     }
 
-    public boolean Modificar(String Identificador) {
+    public boolean Modificar() {
         String sqla = "UPDATE public.roles SET tipo_rol='" + getTipo_rol() + "'"
-                + " WHERE cod_rol = '" + Identificador + "';";
+                + " WHERE cod_rol = '" + getCod_rol() + "';";
         return con.insertUpdateDelete(sqla);
     }
 
-    public boolean Borrar(String Identificador) {
-        String sqla = "DELETE FROM public.roles WHERE cod_rol = '" + Identificador + "';";
+    public boolean Borrar() {
+        String sqla = "DELETE FROM public.roles WHERE cod_rol = '" + getCod_rol() + "';";
         return con.insertUpdateDelete(sqla);
     }
 

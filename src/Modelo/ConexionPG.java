@@ -8,13 +8,11 @@ package Modelo;
 //import com.sun.jdi.connect.spi.Connection;
 import java.sql.DriverManager;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,7 +27,7 @@ public class ConexionPG {
     //Datos de Conexion
     private String cadConexion = "jdbc:postgresql://localhost:5432/proyecto_final";
     private String usuario="postgres";
-    private String contrasenia="1";
+    private String contrasenia="1234";
     
     public ConexionPG(){
         try {

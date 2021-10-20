@@ -17,13 +17,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.postgresql.util.Base64;
-import picture.Picture;
+import Picture.Picture;
 import Vista.*;
 
 public class Modelo_Usuario extends Usuario {
 
     private ConexionPG con = new ConexionPG();
     private Picture picture = new Picture();
+    private String[] verificar;
 
     public Modelo_Usuario() {
     }
@@ -33,7 +34,7 @@ public class Modelo_Usuario extends Usuario {
     }
 
     public String[] verificarLogin(String usuario, String contrasenia) throws SQLException {
-        String[] verificar = new String[2];
+        verificar = new String[2];
         //usuario, contrasenia
         String sql = "select tip_usu, cod_usuario from usuario where usuario='" + usuario + "' and contrasenia='" + contrasenia + "'";
         System.out.println("123 "+sql);
@@ -73,8 +74,9 @@ public class Modelo_Usuario extends Usuario {
         String sql;
         sql = "UPDATE public.usuario";
         if (getFoto() != null) {
+            System.out.println("HOLA");
             String foto64 = picture.ParseToB64(getFoto());
-            sql += " SET tip_usu='" + getAcceso() + "', usuario='" + getUsuario() + "', contrasenia='" + getContraseña() + "', foto='" + getFoto() + "'";
+            sql += " SET tip_usu='" + getAcceso() + "', usuario='" + getUsuario() + "', contrasenia='" + getContraseña() + "', foto='" + foto64 + "'";
         } else {
             sql += " SET tip_usu='" + getAcceso() + "', usuario='" + getUsuario() + "', contrasenia='" + getContraseña() + "'";
         }
@@ -109,6 +111,23 @@ public class Modelo_Usuario extends Usuario {
         }
     }
     
+    private String extraerCedula(int condigo_us){
+        String cedula=null;
+        String sql= "SELECt cedula FROM public.empleado WHERE cod_empleado="+condigo_us;
+        ResultSet rs = con.selectConsulta(sql);
+        try {
+            while (rs.next()) {
+                cedula = rs.getString("cedula");
+            }
+            //IMPORTANTISIMO CERRAR CONEXION.
+            rs.close();
+            return cedula;
+        } catch (SQLException ex) {
+            Logger.getLogger(Modelo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+    }
     public ArrayList<Usuario> listarUsuartios(String aguja){
         ArrayList<Usuario> listaUsuarios= new ArrayList<>();
         String sql= "SELECT cod_usuario, cod_empleado, tip_usu, usuario, contrasenia, foto";
